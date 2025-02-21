@@ -1,7 +1,3 @@
-
-
-
-
 import 'dart:io';
 void main(){
 print("Digite seu nome: ");
