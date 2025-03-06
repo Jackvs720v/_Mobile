@@ -12,7 +12,8 @@ class Produtos {
 class Fritadeira extends Produtos{
 
   Fritadeira(nome,quantidade,preco,tpComunicacao,energia):super(nome,quantidade,preco,tpComunicacao,energia);
-
+//polimorfismo
+@override
   void ligarF(){
     print("Fritadeira ligada");
   }
@@ -35,7 +36,8 @@ class Fritadeira extends Produtos{
 class ArCondicionado extends Produtos{
 
   ArCondicionado(nome,quantidade,preco,tpComunicacao,energia):super(nome,quantidade,preco,tpComunicacao,energia);
-
+//polimorfismo
+@override
   void ligarA(){
     print("Ar condicionado ligado");
   }
@@ -57,7 +59,8 @@ class ArCondicionado extends Produtos{
 
 class Televisao extends Produtos{
   Televisao(nome,quantidade,preco,tpComunicacao,energia):super(nome,quantidade,preco,tpComunicacao,energia);
-
+//polimorfismo
+@override
   void ligarT(){
     print("Televisão Ligado");
   }
