@@ -17,6 +17,7 @@ class Telaapp extends StatelessWidget {
   Widget build(BuildContext context) {
     //MaterialApp vai permitir construir a tela do app
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Column(
         //espaçamento primario
          // mainAxisAlignment: MainAxisAlignment.center,
@@ -41,6 +42,9 @@ class Telaapp extends StatelessWidget {
 
         Text("Mobile 1 - Flutter ", style: TextStyle(fontSize: 30, color: Colors.blue,decoration: TextDecoration.none ),),
         Container(width: 200,height: 100,color: Colors.red,),
+        ElevatedButton(onPressed: (){
+          print("Botao Pressionado");
+        }, child: Text("Mensagem")),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
