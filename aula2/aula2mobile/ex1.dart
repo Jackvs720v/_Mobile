@@ -1,5 +1,4 @@
 //Import a Biblioteca dart io
-import 'dart:io';
 
 //Função principal do código
 void main(){

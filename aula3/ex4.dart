@@ -1,6 +1,5 @@
 //Ex.4 - While
 //13.02.2025
-import 'dart:io';
 
 void main(){
   int cont = 0, res = 0;

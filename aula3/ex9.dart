@@ -1,6 +1,5 @@
 // Exemplo de função com parametros 
 
-import "dart:io";
 
 void exibirmensagem(String mensagem,[String remetente = "Anonimo"]){
   print("Mensagem de $remetente: $mensagem");
