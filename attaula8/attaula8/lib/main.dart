@@ -19,9 +19,13 @@ class _AtividadeAppState extends State<AtividadeApp> {
       home: Scaffold(
         appBar: AppBar(
           title: Text("Contador Aula 8 Atividade"),
+          backgroundColor: Colors.blue,
         ),
         //body
-        body: Home(),
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          )
+        
       ),
     );
   }
