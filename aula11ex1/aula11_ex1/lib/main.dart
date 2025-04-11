@@ -30,7 +30,7 @@ class _NavScreenState extends State<NavScreen> {
     fontSize: 30, fontWeight: FontWeight.bold);
 
     static const List<Widget> _widgetOpt = <Widget>[
-      brasil,
+      
     ];
     void onItemTapped(int index){
       setState(() {
