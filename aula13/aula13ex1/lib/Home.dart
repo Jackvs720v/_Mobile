@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart'
-    as htpp; //pacote que irá permitir utilizar as funções para consumo da api
-import 'dart:convert'; //Metodo que permite a conversão dos dados
+// importa a biblioteca http que permite utilizar os metodos http
+import 'package:http/http.dart' as http; 
+import 'dart:convert'; // biblioteca que permite a conversao dos dados
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,79 +11,77 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // cria a variavel para armazenar o cep digitado pelo usuario
   TextEditingController ncep = TextEditingController();
   String? logradouro;
   String? bairro;
   String? cidade;
   String? ddd;
   String? estado;
-  // async função assincrona
-  _consultaCep() async {
-    String url = "https://viacep.com.br/ws/13060350/json/";
-    String url2 = "https://cep.awesomeapi.com.br/${ncep.text}";
-    htpp.Response
-        response; // variavel que será responsável por armazenar a resposta da api
-    response = await htpp.get(Uri.parse(
-        url2)); // response está armazenando os dados que vierem pela api
 
-    Map<String, dynamic> dados =
-        json.decode(response.body); // variavel dados para armazenar
-    // a informação decodificada
-    setState(() {
-      logradouro = dados["address"];
-      bairro = dados["district"];
-      cidade = dados["city"];
-      ddd = dados["ddd"];
-      estado = dados['state'];
-    });
+  // função que realiza a consulta do cep
 
-    print("Codigo de status da api ${response.statusCode.toString()}");
-    print("Resposta da api");
-    // print("${response.body}");
-    print("Logradouro: ${logradouro}");
-    print("Bairro: ${bairro}");
-    print("Cidade: ${cidade} - ${estado}");
-    print("DDD: ${ddd}");
-    print(ncep.text);
+  _consultaCep()async{
+
+  // cria variavel com a url para consultar o cep
+  String url = "https://viacep.com.br/ws/13060354/json/";
+  String url2 = "https://cep.awesomeapi.com.br/${ncep.text}";
+
+  // cria variavel do metodo http response
+  http.Response response; // variavel que ira armazenar a resposta da api
+  response = await http.get(Uri.parse(url2));
+
+  // Realizando o parse da resposta da API
+  Map<String,dynamic>dados = json.decode(response.body); // informação codificada
+
+  setState(() {
+    logradouro = dados["address"];
+    bairro=dados["district"];
+    cidade =dados["city"];
+    ddd=dados["ddd"];
+    estado = dados["state"];
+  });
+
+  print("Codigo de status da api ${response.statusCode.toString()}");
+  print("Resposta da api");
+  print("${response.body}");
+
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("App consulta CEP"),
+        title: Text("App aula 13 - Consulta CEP"),
+        centerTitle: true,
+        backgroundColor: Colors.red,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextField(
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(labelText: "Digite o Cep"),
+            decoration: InputDecoration(
+              labelText: "Digite o Cep"
+            ),
             controller: ncep,
-          ),
-          Center(
+                     ),
+
+          SizedBox(
+            child: 
+            
+            Padding(
+              padding: const EdgeInsets.all(12.0),
               child: ElevatedButton(
-                  onPressed: _consultaCep, child: Text("Consultar"))),
-          Text(
-            "Endereço: ",
-            style: TextStyle(fontSize: 18),
-          ),
-          Text(
-            "Logradouro: ${logradouro}",
-            style: TextStyle(fontSize: 18),
-          ),
-          Text(
-            "Bairro: ${bairro}",
-            style: TextStyle(fontSize: 18),
-          ),
-          Text(
-            "Cidade: ${cidade} - ${estado}",
-            style: TextStyle(fontSize: 18),
-          ),
-          Text(
-            "DDD: ${ddd}",
-            style: TextStyle(fontSize: 18),
-          ),
+                onPressed: _consultaCep, 
+               
+                child: Text("Consultar")),
+            ),
+          width: double.infinity,),
+          Text("Endereço:",style: TextStyle(fontSize: 18),),
+          Text("Logradouro: ${logradouro} ",style: TextStyle(fontSize: 18),),
+          Text("Bairro: ${bairro} ",style: TextStyle(fontSize: 18),),
+          Text("Cidade ${cidade} - ${estado} ",style: TextStyle(fontSize: 18),),
+          Text("DDD: ${ddd}",style: TextStyle(fontSize: 18),)
+          
         ],
       ),
     );
