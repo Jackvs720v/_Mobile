@@ -10,6 +10,10 @@ class Telaacionamento extends StatefulWidget {
 }
 
 class _TelaacionamentoState extends State<Telaacionamento> {
+  void initState(){
+    super.initState();
+    _leitura();
+  }
   final bool status = false;
   Color status_cor = Colors.red;
    int? temperatura;
@@ -19,7 +23,7 @@ class _TelaacionamentoState extends State<Telaacionamento> {
  int? pH;
   
   Future<void> _leitura()async{
-    final response = await http.get(Uri.parse('http://10.0.2.2:8000/dados'));
+    final response = await http.get(Uri.parse('https://apiintegradoresp-production.up.railway.app/dados'));
     print(response.body);
     final dados = json.decode(response.body);
     setState(() {
@@ -43,7 +47,7 @@ class _TelaacionamentoState extends State<Telaacionamento> {
 Future<void> _ligarBomba() async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:8000/bomba'),
+        Uri.parse('https://apiintegradoresp-production.up.railway.app/bomba'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'estado': 1}),
       );
@@ -65,7 +69,7 @@ Future<void> _ligarBomba() async {
   Future<void> _desligarBomba() async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:8000/bomba'),
+        Uri.parse('https://apiintegradoresp-production.up.railway.app/bomba'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'estado': 0}),
       );
@@ -155,6 +159,10 @@ Future<void> _ligarBomba() async {
                   child: Text('Leitura'),
                 ),
               ),
+              Text("Temperatura: ${temperatura}"),
+              Text("Umidade: ${umidade}"),
+              Text("Sensor umidade solo: ${sensorUmidSolo}"),
+              Text("pH: ${pH}"),
             ],
           ),
         ));
