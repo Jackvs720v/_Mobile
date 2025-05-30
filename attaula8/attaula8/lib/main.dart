@@ -1,83 +1,21 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const AtividadeApp());
+  runApp(TelaApp());
 }
 
-class AtividadeApp extends StatefulWidget {
-  
-  const AtividadeApp({super.key});
+class TelaApp extends StatelessWidget {
+  const TelaApp({super.key});
 
-  @override
-  State<AtividadeApp> createState() => _AtividadeAppState();
-}
-
-class _AtividadeAppState extends State<AtividadeApp> {
-   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  void _decrementCounter() {
-    _counter--;
-  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          appBar: AppBar(
-            title: Text("Contador Aula 8 Atividade"),
-            backgroundColor: Colors.blue,
-          ),
-          //body
-          body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-          
+        appBar: AppBar(
+          title: Text("App aula 08 - Multi child layout"),
         ),
-        
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-        
-       
-      ),
+        body: Home(),
       ),
     );
   }
@@ -91,10 +29,106 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String msg = "Mobile";
+  int _counter = 0;
+
+  void _exibemsg() {
+    setState(() {
+      msg = "Mobile 1";
+    });
+  }
+
+  void _limpar() {
+    setState(() {
+      msg = '';
+    });
+  }
+
+  void _increment() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrement() {
+    setState(() {
+      _counter--;
+    });
+  }
+
+  void _resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Icon(Icons.star, color: Colors.yellow, size: 50),
+            Icon(Icons.favorite, color: Colors.red, size: 50),
+            Icon(Icons.thumb_up, color: Colors.blue, size: 50),
+          ],
+        ),
+        SizedBox(height: 20),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              width: 200,
+              height: 200,
+              color: Colors.blueAccent,
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.black,
+              child: Center(
+                child: Text(
+                  msg,
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 250,
+          child: ListView(
+            children: [
+              ListTile(
+                leading: Icon(Icons.person_2_rounded),
+                title: Text("Usuario 1"),
+                subtitle: Text("Descriçao do usuario 1"),
+              ),
+              ListTile(
+                leading: Icon(Icons.person_add_alt_1_sharp),
+                title: Text("Usuario 2"),
+                subtitle: Text("Descriçao do usuario 2"),
+              ),
+            ],
+          ),
+        ),
+        ElevatedButton(onPressed: _exibemsg, child: Text("Mensagem")),
+        ElevatedButton(onPressed: _limpar, child: Text("Limpar")),
+        SizedBox(height: 10),
+        Text('Contador: $_counter', style: TextStyle(fontSize: 20)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(onPressed: _increment, child: Text("+")),
+            SizedBox(width: 10),
+            ElevatedButton(onPressed: _decrement, child: Text("-")),
+            SizedBox(width: 10),
+            ElevatedButton(onPressed: _resetCounter, child: Text("Zerar")),
+          ],
+        ),
+      ],
+    );
   }
 }
-
-
