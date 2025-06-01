@@ -1,146 +1,153 @@
 import 'package:flutter/material.dart';
 
-class Valor{
-  final String value;
- 
-
-  Valor({
-   required this.value
-  });
-}
-
 void main() {
-  runApp(MaterialApp(
-    home: telaPrincipal(),
+  runApp(const MaterialApp(
+    home: TelaPrincipal(),
   ));
 }
 
-class telaPrincipal extends StatelessWidget {
-  const telaPrincipal({super.key});
+class TelaPrincipal extends StatefulWidget {
+  const TelaPrincipal({super.key});
+
+  @override
+  State<TelaPrincipal> createState() => _TelaPrincipalState();
+}
+
+class _TelaPrincipalState extends State<TelaPrincipal> {
+  // Valores dos sensores
+  double tempAr = 0.0;
+  double umidAr = 0.0;
+  double tempSolo = 0.0;
+  double umidSolo = 0.0;
+
+  void atualizarDados() {
+    setState(() {
+      tempAr = 23.5;
+      umidAr = 52.1;
+      tempSolo = 20.2;
+      umidSolo = 38.7;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-      // atribuindo cor ao appbar
-    backgroundColor: Colors.green,
-    elevation: 5,
-    iconTheme: IconThemeData(color: Colors.grey),
-    // centraliza o titulo do aplicativo
-    centerTitle: true,
-    title: Row(
-      children: [
-        Padding(padding: EdgeInsets.all(12),
-        child: Text('Monitor de Sensores',
-        style: TextStyle(fontSize:20,
-        fontWeight: FontWeight.w800,
-        color: Colors.white ),),
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        elevation: 5,
+        centerTitle: true,
+        title: const Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(12),
+              child: Text(
+                'Monitor de Sensores',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white),
+              ),
+            ),
+            Spacer(),
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.person,
+                color: Colors.green,
+              ),
+            ),
+          ],
         ),
-
-        Spacer(),
-        // permite colocar a foto do usuario logado por exemplo
-        CircleAvatar(
-          backgroundColor: Colors.green[100],
-          child: Icon(Icons.person,color: Colors.green,),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            _DashboardButton(
+              icon: Icons.thermostat_rounded,
+              label: 'Temperatura do Ar',
+              valor: '${tempAr.toStringAsFixed(1)} °C',
+              onTap: () {},
+            ),
+            const SizedBox(height: 10),
+            _DashboardButton(
+              icon: Icons.water_drop_outlined,
+              label: 'Umidade do Ar',
+              valor: '${umidAr.toStringAsFixed(1)} %',
+              onTap: () {},
+            ),
+            const SizedBox(height: 10),
+            _DashboardButton(
+              icon: Icons.thermostat,
+              label: 'Temperatura do Solo',
+              valor: '${tempSolo.toStringAsFixed(1)} °C',
+              onTap: () {},
+            ),
+            const SizedBox(height: 10),
+            _DashboardButton(
+              icon: Icons.water_drop,
+              label: 'Umidade do Solo',
+              valor: '${umidSolo.toStringAsFixed(1)} %',
+              onTap: () {},
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: atualizarDados,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
+              child: const Text("Atualizar Dados"),
+            ),
+          ],
         ),
-        
-      ],
-      
-    ),
-
-    ),
-// corpo do Scaffold
-    body: Column(
-      children: [
-        
-        SizedBox(height: 130,),
-
-        // Cria botoes em Card
-       _DashboardButton(
-        icon: Icons.thermostat_rounded, 
-        label: 'Temperatura do Ar', 
-        valor: "0.0 °C",
-        onTap: (){}),
-
-        SizedBox(height: 10,),
-         _DashboardButton(
-        icon: Icons.thermostat_rounded, 
-        label: 'Umidade do Ar', 
-        valor: "0.0 °C",
-        onTap: (){
-          //Navigator.push(context,
-         //  MaterialPageRoute(builder: (context)=>Telaacionamento()));
-        }),
-
-        SizedBox(height: 10,),
-         _DashboardButton(
-        icon: Icons.thermostat_rounded ,
-        label: 'Temperatura do Solo', 
-        valor: "0.0 °C",
-        onTap: (){}),
-       
-        SizedBox(height: 10,),
-         _DashboardButton(
-        icon: Icons.thermostat_rounded ,
-        label: 'Umidade do Solo', 
-        valor: "0.0 °C",
-        onTap: (){}),
-
-       
-      ],
-
-    ),
-
-    
+      ),
     );
-    
   }
 }
 
 class _DashboardButton extends StatelessWidget {
-  
-
-  // Criando atributos para a classe
-
   final IconData icon;
   final String label;
-  final VoidCallback onTap;
   final String valor;
+  final VoidCallback onTap;
 
-  // Criando construtor com passagem de parametros obrigatorios
-
-  const _DashboardButton({required this.icon,
-  required this.label, 
-  required this.valor, 
-  required this.onTap});
+  const _DashboardButton({
+    required this.icon,
+    required this.label,
+    required this.valor,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    //  novo widget que permite tocar na tela
     return InkWell(
-     onTap: onTap,
-     child: Card(
-      elevation: 5,
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical:20,horizontal: 10),
-        child: Row(
-          children: [
-            Icon(
-              icon,color: Colors.green,size: 20,
-            ),
-            SizedBox(width: 16,),
-            Text(label,style: TextStyle(
-              fontSize: 18,color: Colors.black
-            ),),
-            
-            Text(valor,style: TextStyle(
-              fontSize: 18,color: Colors.black, 
-            ),)
-          ],
+      onTap: onTap,
+      child: Card(
+        elevation: 5,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(icon, color: Colors.green, size: 24),
+                  const SizedBox(width: 12),
+                  Text(
+                    label,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+              Text(
+                valor,
+                style: const TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
         ),
-        ),
-      
-     ),
+      ),
     );
   }
 }
