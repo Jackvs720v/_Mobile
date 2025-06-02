@@ -1,89 +1,72 @@
 import 'package:flutter/material.dart';
+import 'screens/brasil_screen.dart';
+import 'screens/italia_screen.dart';
+import 'screens/japao_screen.dart';
+import 'screens/mexico_screen.dart';
 
 void main() {
-  runApp(NavBottom());
+  runApp(const MyApp());
 }
 
-class NavBottom extends StatelessWidget {
-  const NavBottom({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NavBottom(),
+      home: FoodNavigator(),
     );
   }
 }
 
-class NavScreen extends StatefulWidget {
-  const NavScreen({super.key});
+class FoodNavigator extends StatefulWidget {
+  const FoodNavigator({super.key});
 
   @override
-  State<NavScreen> createState() => _NavScreenState();
+  State<FoodNavigator> createState() => _FoodNavigatorState();
 }
 
-class _NavScreenState extends State<NavScreen> {
-  
-  int selectindex =0;
-  static const TextStyle option = TextStyle(
-    fontSize: 30, fontWeight: FontWeight.bold);
+class _FoodNavigatorState extends State<FoodNavigator> {
+  int _selectedIndex = 0;
 
-    static const List<Widget> _widgetOpt = <Widget>[
-      
-    ];
-    void onItemTapped(int index){
-      setState(() {
-        selectindex =index;
-      });
-    }
+  final List<Widget> _screens = const [
+    BrasilScreen(),
+    ItaliaScreen(),
+    JapaoScreen(),
+    MexicoScreen(),
+  ];
+
+  final List<BottomNavigationBarItem> _bottomItems = const [
+    BottomNavigationBarItem(icon: Icon(Icons.flag), label: 'Brasil'),
+    BottomNavigationBarItem(icon: Icon(Icons.local_pizza), label: 'Itália'),
+    BottomNavigationBarItem(icon: Icon(Icons.rice_bowl), label: 'Japão'),
+    BottomNavigationBarItem(icon: Icon(Icons.local_dining), label: 'México'),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: Text("Aplicativo aula 11"),
+        title: const Text('Comidas Típicas'),
+        backgroundColor: Colors.redAccent,
         centerTitle: true,
-        backgroundColor: Colors.teal,
       ),
-      body: Center(
-        // _widgetOptions é a lista de de telas 
-        // selectedindex é o index selecionado da tela
-        child: _widgetOpt.elementAt(selectindex),
-      ),
-      // Bottom navigator bar
-      bottomNavigationBar: BottomNavigationBar
-      (
-        currentIndex: selectindex,
-      selectedItemColor: Colors.white,
-      onTap: onItemTapped,
-      backgroundColor: Colors.red,
-        items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-        icon:Icon(Icons.home),
-        label:'Home',
-        backgroundColor: Colors.red
-        
-       ),
-
-        BottomNavigationBarItem(
-          icon: Icon(Icons.school_outlined),
-          label: 'School',
-          backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-          icon: Icon(Icons.business_outlined),
-          label: 'Business',
-          backgroundColor: Colors.orange,
-          ),
-          BottomNavigationBarItem(
-          icon: Icon(Icons.smart_toy_rounded),
-          label: 'Chatbot',
-          backgroundColor: Colors.teal,
-          ),
-      ],
-      
-      
+      body: _screens[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: _bottomItems,
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.redAccent,
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
-  }
+}
